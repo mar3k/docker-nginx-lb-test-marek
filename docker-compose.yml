@@ -1,0 +1,33 @@
+version: "3.2"
+services: 
+
+    nginx:
+        image: nginx
+        networks:
+          - my_app
+        ports:
+            - "8000:80"
+        links:
+            - app1
+            - app2
+
+    app1:
+        build: app1
+        networks:
+          - my_app
+
+    app2:
+        build: app2
+        networks:
+          - my_app
+
+    db:
+        image: percona:8.0
+        networks:
+          - my_app
+        ports:
+          - "20003:3306"
+        environment:
+            MYSQL_ROOT_PASSWORD: example
+networks: 
+    my_app:
